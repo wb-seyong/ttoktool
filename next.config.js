@@ -9,13 +9,14 @@ const withBundleAnalyzer = require('@next/bundle-analyzer')({
 // You might need to insert additional domains in script-src if you are using external services
 const ContentSecurityPolicy = `
   default-src 'self';
-  script-src 'self' 'unsafe-eval' 'unsafe-inline' giscus.app analytics.umami.is https://ads-partners.coupang.com *.coupang.com *.coupangcdn.com https://partners.coupangcdn.com;
+  script-src 'self' 'unsafe-eval' 'unsafe-inline' giscus.app analytics.umami.is https://ads-partners.coupang.com *.coupang.com *.coupangcdn.com https://pagead2.googlesyndication.com https://*.google.com https://*.googlesyndication.com https://*.doubleclick.net https://*.adtrafficquality.google https://ep2.adtrafficquality.google;
   style-src 'self' 'unsafe-inline';
   img-src * blob: data:;
   media-src *.s3.amazonaws.com;
   connect-src *;
   font-src 'self';
-  frame-src giscus.app https://ads-partners.coupang.com;
+  frame-src giscus.app https://ads-partners.coupang.com *.coupang.com https://*.doubleclick.net https://*.google.com https://*.adtrafficquality.google https://ep2.adtrafficquality.google;
+  fenced-frame-src giscus.app https://ads-partners.coupang.com *.coupang.com https://*.doubleclick.net https://*.google.com https://*.adtrafficquality.google https://ep2.adtrafficquality.google;
   worker-src 'self' blob:;
   child-src 'self' blob: https://ads-partners.coupang.com;
   manifest-src 'self';

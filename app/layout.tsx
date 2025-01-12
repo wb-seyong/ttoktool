@@ -11,6 +11,7 @@ import Footer from '@/components/Footer'
 import siteMetadata from '@/data/siteMetadata'
 import { ThemeProviders } from './theme-providers'
 import { Metadata } from 'next'
+import GoogleAdsense from '@/components/GoogleAdsense'
 
 const space_grotesk = Space_Grotesk({
   subsets: ['latin'],
@@ -95,6 +96,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
       <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#000" />
       <meta name="google-adsense-account" content="ca-pub-9453439435774354"></meta>
       <link rel="alternate" type="application/rss+xml" href={`${basePath}/feed.xml`} />
+      <GoogleAdsense />
       <body className="bg-white pl-[calc(100vw-100%)] text-black antialiased dark:bg-gray-950 dark:text-white">
         <ThemeProviders>
           <Analytics analyticsConfig={siteMetadata.analytics as AnalyticsConfig} />
