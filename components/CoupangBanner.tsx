@@ -25,7 +25,6 @@ export default function CoupangBanner({
           frameBorder="0"
           scrolling="no"
           referrerPolicy="unsafe-url"
-          browsingtopics="true"
           className="mx-auto"
           title="쿠팡 파트너스"
         />
