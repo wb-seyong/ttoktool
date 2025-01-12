@@ -6,8 +6,8 @@ const siteMetadata = {
   description: 'n년차 개발자의 기록용 블로그',
   language: 'ko-kr',
   theme: 'system', // system, dark or light
-  siteUrl: 'https://tailwind-nextjs-starter-blog.vercel.app',
-  siteRepo: 'https://github.com/timlrx/tailwind-nextjs-starter-blog',
+  siteUrl: 'https://ttoktool-git-main-wb-seyongs-projects.vercel.app/',
+  siteRepo: 'https://github.com/wb-seyong/ttoktool.gits',
   siteLogo: `${process.env.BASE_PATH || ''}/static/images/logo.png`,
   socialBanner: `${process.env.BASE_PATH || ''}/static/images/twitter-card.png`,
   mastodon: 'https://mastodon.social/@mastodonuser',
