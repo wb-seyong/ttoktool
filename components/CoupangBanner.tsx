@@ -1,83 +1,69 @@
 'use client'
 
-import Script from 'next/script'
-import { useEffect, useRef, useState } from 'react'
+import { useEffect, useRef } from 'react'
 
 interface CoupangBannerProps {
   id: number
   trackingCode: string
-  subId?: string | null
 }
 
-export default function CoupangBanner({ id, trackingCode, subId = null }: CoupangBannerProps) {
+// 쿠팡 파트너스 타입 정의
+interface PartnersCoupangG {
+  G: new (config: {
+    id: number
+    trackingCode: string
+    template: string
+    width: string
+    height: string
+  }) => void
+}
+
+declare global {
+  interface Window {
+    PartnersCoupang: PartnersCoupangG
+  }
+}
+
+export default function CoupangBanner({ id, trackingCode }: CoupangBannerProps) {
+  const scriptRef = useRef<HTMLScriptElement | null>(null)
   const initialized = useRef(false)
-  const [width, setWidth] = useState('680')
-  const [height, setHeight] = useState('140')
 
   useEffect(() => {
-    const updateBannerSize = () => {
-      const windowWidth = window.innerWidth
-      if (windowWidth < 640) {
-        // sm
-        setWidth('320')
-        setHeight('100')
-      } else if (windowWidth < 768) {
-        // md
-        setWidth('500')
-        setHeight('120')
-      } else {
-        // lg 이상
-        setWidth('680')
-        setHeight('140')
+    const loadCoupangBanner = () => {
+      if (!scriptRef.current) {
+        const script = document.createElement('script')
+        script.src = 'https://ads-partners.coupang.com/g.js'
+        script.async = true
+        script.onload = () => {
+          if (!initialized.current && window.PartnersCoupang) {
+            new window.PartnersCoupang.G({
+              id: id,
+              trackingCode: trackingCode,
+              template: 'carousel',
+              width: '680',
+              height: '140',
+            })
+            initialized.current = true
+          }
+        }
+        document.body.appendChild(script)
+        scriptRef.current = script
       }
     }
 
-    // 초기 사이즈 설정
-    updateBannerSize()
-
-    // 리사이즈 이벤트 리스너
-    window.addEventListener('resize', updateBannerSize)
-
-    if (!initialized.current) {
-      // @ts-ignore: PartnersCoupang is loaded from external script
-      if (window.PartnersCoupang) {
-        // @ts-ignore
-        new window.PartnersCoupang.G({
-          id,
-          trackingCode,
-          subId,
-          template: 'carousel',
-          width,
-          height,
-        })
-        initialized.current = true
-      }
-    }
+    loadCoupangBanner()
 
     return () => {
-      window.removeEventListener('resize', updateBannerSize)
+      if (scriptRef.current) {
+        document.body.removeChild(scriptRef.current)
+        scriptRef.current = null
+        initialized.current = false
+      }
     }
-  }, [id, trackingCode, subId, width, height])
+  }, [id, trackingCode])
 
   return (
     <div className="my-8">
-      <Script
-        src="https://ads-partners.coupang.com/g.js"
-        strategy="afterInteractive"
-        nonce="coupang-partners"
-        crossOrigin="anonymous"
-        onLoad={() => {
-          // @ts-ignore
-          new window.PartnersCoupang.G({
-            id,
-            trackingCode,
-            subId,
-            template: 'carousel',
-            width,
-            height,
-          })
-        }}
-      />
       <div
         id={`coupang-banner-${id}`}
         className="mx-auto my-4"
