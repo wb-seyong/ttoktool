@@ -5,17 +5,11 @@ import { useEffect, useRef, useState } from 'react'
 
 interface CoupangBannerProps {
   id: number
-  template?: 'carousel' | 'banner'
   trackingCode: string
-  tsource?: string
+  subId?: string | null
 }
 
-export default function CoupangBanner({
-  id,
-  template = 'carousel',
-  trackingCode,
-  tsource = '',
-}: CoupangBannerProps) {
+export default function CoupangBanner({ id, trackingCode, subId = null }: CoupangBannerProps) {
   const initialized = useRef(false)
   const [width, setWidth] = useState('680')
   const [height, setHeight] = useState('140')
@@ -50,11 +44,11 @@ export default function CoupangBanner({
         // @ts-ignore
         new window.PartnersCoupang.G({
           id,
-          template,
           trackingCode,
+          subId,
+          template: 'carousel',
           width,
           height,
-          tsource,
         })
         initialized.current = true
       }
@@ -63,22 +57,23 @@ export default function CoupangBanner({
     return () => {
       window.removeEventListener('resize', updateBannerSize)
     }
-  }, [id, template, trackingCode, width, height, tsource])
+  }, [id, trackingCode, subId, width, height])
 
   return (
     <div className="my-8">
       <Script
         src="https://ads-partners.coupang.com/g.js"
         strategy="lazyOnload"
+        nonce="coupang-partners"
         onLoad={() => {
           // @ts-ignore
           new window.PartnersCoupang.G({
             id,
-            template,
             trackingCode,
+            subId,
+            template: 'carousel',
             width,
             height,
-            tsource,
           })
         }}
       />
