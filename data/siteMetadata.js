@@ -6,7 +6,7 @@ const siteMetadata = {
   description: 'n년차 개발자의 기록용 블로그',
   language: 'ko-kr',
   theme: 'system', // system, dark or light
-  siteUrl: 'https://ttoktool-git-main-wb-seyongs-projects.vercel.app/',
+  siteUrl: 'https://ttoktool-v101.vercel.app/',
   siteRepo: 'https://github.com/wb-seyong/ttoktool.gits',
   siteLogo: `${process.env.BASE_PATH || ''}/static/images/logo.png`,
   socialBanner: `${process.env.BASE_PATH || ''}/static/images/twitter-card.png`,
