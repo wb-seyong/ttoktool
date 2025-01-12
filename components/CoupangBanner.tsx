@@ -66,7 +66,7 @@ export default function CoupangBanner({
   }, [id, template, trackingCode, width, height, tsource])
 
   return (
-    <>
+    <div className="my-8">
       <Script
         src="https://ads-partners.coupang.com/g.js"
         strategy="lazyOnload"
@@ -90,6 +90,9 @@ export default function CoupangBanner({
           overflow: 'hidden',
         }}
       />
-    </>
+      <p className="mt-2 text-center text-xs text-gray-500">
+        이 포스팅은 쿠팡 파트너스 활동의 일환으로, 이에 따른 일정액의 수수료를 제공받습니다.
+      </p>
+    </div>
   )
 }
