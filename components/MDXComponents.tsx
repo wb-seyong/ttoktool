@@ -1,3 +1,4 @@
+import CoupangBanner from './CoupangBanner'
 import TOCInline from 'pliny/ui/TOCInline'
 import Pre from 'pliny/ui/Pre'
 import BlogNewsletterForm from 'pliny/ui/BlogNewsletterForm'
@@ -13,4 +14,7 @@ export const components: MDXComponents = {
   pre: Pre,
   table: TableWrapper,
   BlogNewsletterForm,
+  CoupangBanner,
 }
+
+export default components
