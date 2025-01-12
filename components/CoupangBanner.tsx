@@ -63,8 +63,9 @@ export default function CoupangBanner({ id, trackingCode, subId = null }: Coupan
     <div className="my-8">
       <Script
         src="https://ads-partners.coupang.com/g.js"
-        strategy="lazyOnload"
+        strategy="afterInteractive"
         nonce="coupang-partners"
+        crossOrigin="anonymous"
         onLoad={() => {
           // @ts-ignore
           new window.PartnersCoupang.G({
