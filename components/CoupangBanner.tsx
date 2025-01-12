@@ -31,21 +31,35 @@ export default function CoupangBanner({ id, trackingCode }: CoupangBannerProps) 
   useEffect(() => {
     const loadCoupangBanner = () => {
       if (!scriptRef.current) {
+        console.log('Loading Coupang script...')
         const script = document.createElement('script')
         script.src = 'https://ads-partners.coupang.com/g.js'
         script.async = true
+
         script.onload = () => {
+          console.log('Script loaded, PartnersCoupang:', window.PartnersCoupang)
           if (!initialized.current && window.PartnersCoupang) {
-            new window.PartnersCoupang.G({
-              id: id,
-              trackingCode: trackingCode,
-              template: 'carousel',
-              width: '680',
-              height: '140',
-            })
-            initialized.current = true
+            try {
+              console.log('Initializing banner with:', { id, trackingCode })
+              new window.PartnersCoupang.G({
+                id,
+                trackingCode,
+                template: 'carousel',
+                width: '680',
+                height: '140',
+              })
+              initialized.current = true
+              console.log('Banner initialized successfully')
+            } catch (error) {
+              console.error('Error initializing banner:', error)
+            }
           }
         }
+
+        script.onerror = (error) => {
+          console.error('Error loading script:', error)
+        }
+
         document.body.appendChild(script)
         scriptRef.current = script
       }
@@ -58,6 +72,7 @@ export default function CoupangBanner({ id, trackingCode }: CoupangBannerProps) 
         document.body.removeChild(scriptRef.current)
         scriptRef.current = null
         initialized.current = false
+        console.log('Cleanup: Script removed')
       }
     }
   }, [id, trackingCode])
@@ -65,11 +80,12 @@ export default function CoupangBanner({ id, trackingCode }: CoupangBannerProps) 
   return (
     <div className="my-8">
       <div
-        id={`coupang-banner-${id}`}
         className="mx-auto my-4"
         style={{
           maxWidth: '100%',
           overflow: 'hidden',
+          minHeight: '140px',
+          border: '1px solid #eee',
         }}
       />
       <p className="mt-2 text-center text-xs text-gray-500">
